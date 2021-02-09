@@ -10,8 +10,9 @@ namespace LayerSystem
 {
     public class AssetbundleMeshLayer : Layer
     {
-        public Material DefaultMaterial;
-
+        //public Material DefaultMaterial;
+		public List<Material> DefaultMaterialList = new List<Material>();
+		public bool createMeshcollider = false;
 		public override void OnDisableTiles(bool isenabled)
         {
 
@@ -82,6 +83,11 @@ namespace LayerSystem
 		{
 			int lod = tiles[new Vector2Int(tileChange.X, tileChange.Y)].LOD;
 			string url = Constants.BASE_DATA_URL + Datasets[lod].path;
+            if (Datasets[lod].path.StartsWith("https://"))
+            {
+				url = Datasets[lod].path;
+
+			}
 			url = url.Replace("{x}", tileChange.X.ToString());
 			url = url.Replace("{y}", tileChange.Y.ToString());
 			using (UnityWebRequest uwr = UnityWebRequestAssetBundle.GetAssetBundle(url))
@@ -197,7 +203,7 @@ namespace LayerSystem
 			container.transform.parent = transform.gameObject.transform;
 			container.layer = container.transform.parent.gameObject.layer;
 			container.transform.position = CoordConvert.RDtoUnity(new Vector2(tileChange.X + 500, tileChange.Y + 500));
-			Material defaultMaterial = DefaultMaterial;
+			//Material defaultMaterial = DefaultMaterial;
 			container.SetActive(isEnabled);
 			Mesh[] meshesInAssetbundle = new Mesh[0];
 			try
@@ -223,7 +229,11 @@ namespace LayerSystem
 			mesh.uv2 = uvs.ToArray();
 
 			container.AddComponent<MeshFilter>().mesh = mesh;
-			container.AddComponent<MeshRenderer>().sharedMaterial = defaultMaterial;
+			container.AddComponent<MeshRenderer>().sharedMaterials = DefaultMaterialList.ToArray();
+			if (createMeshcollider)
+			{
+				container.AddComponent<MeshCollider>().sharedMesh = mesh;
+			}
 
 			assetBundle.Unload(false);
 
@@ -256,6 +266,8 @@ namespace LayerSystem
 
 		private IEnumerator DownloadObjectData(GameObject obj, int vertexIndex, System.Action<string> callback)
 		{
+			yield return new WaitUntil(() => pauseLoading == false); //wait for opportunity to start
+			pauseLoading = true;
 			var meshFilter = obj.GetComponent<MeshFilter>();
 			if (!meshFilter) yield break;
 
@@ -300,7 +312,6 @@ namespace LayerSystem
 
 		public void Highlight(List<string> ids)
 		{
-			
 			StartCoroutine(HighlightIDs(ids));
 		}
 
