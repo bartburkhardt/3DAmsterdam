@@ -248,7 +248,10 @@ namespace Amsterdam3D.Interface
         {
             Instantiate(buttonPrefab, targetFieldsContainer).SetAction(buttonText,clickAction);
         }
-
+        public void AddCustomField(GameObject gameObject)
+        {
+            Instantiate(gameObject, targetFieldsContainer);
+        }
         public void AddSelectionOutliner(GameObject linkedGameObject, string title, string id = "")
         {
             Instantiate(selectionOutlinerPrefab, targetFieldsContainer).Link(linkedGameObject,title,id);

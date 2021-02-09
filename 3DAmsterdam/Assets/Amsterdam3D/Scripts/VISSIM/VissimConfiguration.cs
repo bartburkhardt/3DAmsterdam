@@ -28,7 +28,7 @@ namespace Amsterdam3D.Interface
             // Opens the side panel
             ObjectProperties.Instance.OpenPanel("Vissim instellingen");
             ObjectProperties.Instance.AddTitle("Onbekende voertuigklasse koppelen");
-            ObjectProperties.Instance.AddURLText("Meer info", "https://3d.amsterdam.nl/web/wat%20is%20nieuw/documentatie/VISSIM_3DAmsterdam.pdf");
+            ObjectProperties.Instance.AddLink("Meer info", "https://3d.amsterdam.nl/web/wat%20is%20nieuw/documentatie/VISSIM_3DAmsterdam.pdf");
             ObjectProperties.Instance.AddDataField("Aantal voertuigen", fileConverter.vehicleTypes.Count.ToString());
             ObjectProperties.Instance.AddDataField("Aantal onbekend", fileConverter.missingVissimTypes.Count.ToString());
             ObjectProperties.Instance.AddCustomField(vissimTypesPrefab);
