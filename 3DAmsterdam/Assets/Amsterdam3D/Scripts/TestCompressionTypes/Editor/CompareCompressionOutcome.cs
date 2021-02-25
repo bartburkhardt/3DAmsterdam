@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -36,5 +37,73 @@ public class CompareCompressionOutcome
 
         buildMap[0].assetBundleName = "uncompressed.assetbundle";
         BuildPipeline.BuildAssetBundles("Assets/TestAssetBundles", buildMap, BuildAssetBundleOptions.UncompressedAssetBundle, BuildTarget.WebGL);
+    }
+
+    [MenuItem("3D Amsterdam/Compression/Convert to uncompressed")]
+    public static void ConvertToUncompressed()
+    {
+        var info = new DirectoryInfo("C:/Users/Sam/Desktop/BrotliCheckTiles/tiles");
+        var fileInfo = info.GetFiles();
+
+        List<AssetBundleBuild> buildMap = new List<AssetBundleBuild>();
+
+        foreach (FileInfo file in fileInfo)
+        {
+            if (file.Name.Contains(".br") || file.Name.Contains("_uncompressed")) continue; //skip default assetbundles
+
+            Debug.Log("Converting " + file.Name);
+
+            //if (file.Length < 39000000) continue;
+
+            var filePath = file.FullName;
+            var myLoadedAssetBundle = AssetBundle.LoadFromFile(filePath);
+            if (myLoadedAssetBundle == null)
+            {
+                Debug.Log("Not an assetbundle: " + filePath);
+            }
+            else
+            {
+                Mesh[] meshesInAssetbundle;
+                meshesInAssetbundle = myLoadedAssetBundle.LoadAllAssets<Mesh>();
+                Mesh sourceMesh = meshesInAssetbundle[0];
+
+               //Copy the mesh
+                Mesh mesh = new Mesh();
+                mesh.indexFormat = sourceMesh.indexFormat;
+                mesh.vertices = sourceMesh.vertices;
+                mesh.uv = sourceMesh.uv;
+                mesh.uv2 = sourceMesh.uv2;
+                mesh.uv3 = sourceMesh.uv3;
+                mesh.uv4 = sourceMesh.uv4;
+                mesh.normals = sourceMesh.normals;
+                mesh.triangles = sourceMesh.triangles;
+                mesh.subMeshCount = sourceMesh.subMeshCount;
+                if (sourceMesh.subMeshCount > 0)
+                {
+                    for (int i = 0; i < sourceMesh.subMeshCount; i++)
+                    {
+                        //submeshes
+                        mesh.SetTriangles(sourceMesh.GetTriangles(i), i);
+                    }
+                }
+
+                var assetFileName = "Assets/TestAssetBundles/" + file.Name + ".mesh";
+                var assetBundleFileName = "Assets/TestAssetBundles/" + file.Name + "_uncompressed";
+                //Turn this into an asset
+                AssetDatabase.CreateAsset(mesh, assetFileName);
+  
+                AssetBundleBuild newBuild = new AssetBundleBuild();
+                string[] assetNames = new string[1];
+                assetNames[0] = assetFileName;
+                newBuild.assetNames = assetNames;
+                newBuild.assetBundleName = assetBundleFileName;
+                buildMap.Add(newBuild);
+
+                myLoadedAssetBundle.Unload(true);
+                EditorUtility.UnloadUnusedAssetsImmediate();
+            }
+        }
+
+        BuildPipeline.BuildAssetBundles("Assets/TestAssetBundles", buildMap.ToArray(), BuildAssetBundleOptions.UncompressedAssetBundle, BuildTarget.WebGL);
     }
 }
