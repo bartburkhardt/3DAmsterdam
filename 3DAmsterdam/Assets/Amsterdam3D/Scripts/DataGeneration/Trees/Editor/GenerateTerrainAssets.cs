@@ -45,7 +45,7 @@ public static class GenerateTerrainAssets
 
         double originX = OriginX;
         double originY = OriginY;
-        string basefilepath = "E:/TiledData/Terrain1000x1000/";
+        string basefilepath = "D:/GemeenteAmsterdam/Terrain1000x1000/";
         
         string jsonfilename = originX.ToString() + "-" +originY.ToString() +".json";
         
@@ -457,7 +457,7 @@ public static class GenerateTerrainAssets
                 buildMap[0].assetBundleName = file.Name.Replace(".mesh", "");
                 buildMap[0].assetNames = assetNames;
 
-                BuildPipeline.BuildAssetBundles("Terrain", buildMap, BuildAssetBundleOptions.None, BuildTarget.WebGL);
+                BuildPipeline.BuildAssetBundles("Terrain", buildMap, BuildAssetBundleOptions.UncompressedAssetBundle, BuildTarget.WebGL);
             }
         }
 

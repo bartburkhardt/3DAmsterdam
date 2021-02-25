@@ -36,8 +36,5 @@ public class CompareCompressionOutcome
 
         buildMap[0].assetBundleName = "uncompressed.assetbundle";
         BuildPipeline.BuildAssetBundles("Assets/TestAssetBundles", buildMap, BuildAssetBundleOptions.UncompressedAssetBundle, BuildTarget.WebGL);
-
-        buildMap[0].assetBundleName = "uncompressed.assetbundle";
-        BuildPipeline.BuildAssetBundles("Assets/TestAssetBundles", buildMap, BuildAssetBundleOptions., BuildTarget.WebGL);
     }
 }
