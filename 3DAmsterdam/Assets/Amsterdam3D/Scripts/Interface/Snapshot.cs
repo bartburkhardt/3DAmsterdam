@@ -36,7 +36,7 @@ public class Snapshot : MonoBehaviour
     public GameObject snapshotSettings;
 
     public Toggle snapshotUI;
-    private bool snapshotPreferenceUI;
+    private bool snapshotPreferenceUI = true;
     public Toggle snapshotNavigation;
     private bool snapshotPreferenceNavigation;
     public Toggle snapshotLogo;
@@ -236,8 +236,9 @@ public class Snapshot : MonoBehaviour
         // Resets variables
         snapshotCamera.targetTexture = null;
         RenderTexture.active = null;
-        snapshotUI.isOn = false;
-        snapshotUI.isOn = true;
+        snapshotNavigation.isOn = true;
+        snapshotLogo.isOn = true;
+        snapshotMainMenu.isOn = true;
 
         // If no filetype is given, make it a png
         if (fileType == "")
@@ -263,11 +264,13 @@ public class Snapshot : MonoBehaviour
     /// </summary>
     public void TakeScreenshot()
     {
-        // Allows the camera to see what is on the canvas
-        responsiveCanvas.renderMode = RenderMode.ScreenSpaceCamera;
-        responsiveCanvas.worldCamera = snapshotCamera;
-        responsiveCanvas.planeDistance = snapshotCamera.nearClipPlane + 0.1f;
-
+        // Allows the camera to see what is on the canvas if user wants to see UI
+        if(snapshotUI.isOn)
+        {
+            responsiveCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+            responsiveCanvas.worldCamera = snapshotCamera;
+            responsiveCanvas.planeDistance = snapshotCamera.nearClipPlane + 0.1f;
+        }
         gameObject.SetActive(true);
         takeScreenshotOnNextFrame = true;
         StartCoroutine(screenshotCoroutine);
