@@ -1,0 +1,23 @@
+{
+    "name": "Netherlands3DAssembly",
+    "references": [
+        "GUID:16b521fde3a0c564eba502b56cd7da50",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:15fc0a57446b3144c949da3e2b9737a9",
+        "GUID:df380645f10b7bc4b97d4f5eb6303d95",
+        "GUID:77ccaf49895b0d64e87cd4b4faf83c49",
+        "GUID:a09b502a3463f794a83cf80a67a246d2",
+        "GUID:d60799ab2a985554ea1a39cd38695018",
+        "GUID:a35efad8797223d499f8c68b1f545dbc",
+        "GUID:8b845b123ab418448a8be2935fa804e0"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

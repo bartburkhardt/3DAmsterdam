@@ -1,0 +1,16 @@
+{
+    "name": "AmsterdamAssembly",
+    "references": [
+        "GUID:e1195eaddac50214dafbc4a0ddb3d67e",
+        "GUID:0e5cdf5a657f04e4a8c53f6c47b3d2ad"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

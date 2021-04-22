@@ -72,11 +72,12 @@ namespace Netherlands3D.Interface
 				Instance = this;
 			}
 			selectedObjects = new List<OutlineObject>();
-			InitializeActions();
+			StartCoroutine(InitializeActions());
 		}
 
-		private void InitializeActions()
+		private IEnumerator InitializeActions()
 		{
+			yield return null;
 			selectorActionMap = ActionHandler.actions.Selector;
 
 			clickedAction = ActionHandler.instance.GetAction(ActionHandler.actions.Selector.Click);
@@ -94,11 +95,19 @@ namespace Netherlands3D.Interface
 
 		private void OnEnable()
 		{
-			selectorActionMap.Enable();
+			StartCoroutine(SetSelectorActionMap(true));
+			//selectorActionMap.Enable();
 		}
 		private void OnDisable()
-		{
+		{			
 			selectorActionMap.Disable();
+		}
+
+		IEnumerator SetSelectorActionMap(bool enable)
+        {
+			yield return null;
+			if(enable) selectorActionMap.Enable();
+			else selectorActionMap.Disable();
 		}
 
 		public void SetActiveInteractable(Interactable interactable)
