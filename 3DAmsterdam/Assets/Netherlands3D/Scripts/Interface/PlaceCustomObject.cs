@@ -54,7 +54,8 @@ namespace Netherlands3D.Interface
                 //Set container layer for objects that have a connection with an interfacelayer
                 spawnedObject.GetComponent<PlaceOnClick>().interfaceLayer = interfaceLayer;
             }
-            else{
+            else
+            {
                 spawnedObject.transform.position = pointer.WorldPosition;
             }
         }

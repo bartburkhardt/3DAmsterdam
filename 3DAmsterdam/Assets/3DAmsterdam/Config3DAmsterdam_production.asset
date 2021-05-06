@@ -16,7 +16,7 @@ MonoBehaviour:
     x: 121311
     y: 487355
   zeroGroundLevelY: 43
-  EnableMinimap: 1
+  EnableMinimap: 0
   minimapServiceUrl: https://t1.data.amsterdam.nl/topo_rd/{zoom}/{x}/{y}.png
   MinimapTileNumberingType: 0
   minimapBottomLeftRD_X: -285401.9

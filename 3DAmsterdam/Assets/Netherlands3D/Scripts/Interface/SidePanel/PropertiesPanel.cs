@@ -28,6 +28,7 @@ namespace Netherlands3D.Interface.SidePanel
         [SerializeField]
         private Tab settingsTab;
 
+
         [Header("Animation")]
         [SerializeField]
         private float animationSpeed = 5.0f;
@@ -85,6 +86,9 @@ namespace Netherlands3D.Interface.SidePanel
         private ActionCheckbox checkboxPrefab;
 
         [SerializeField]
+        private GameObject InputTextPrefab;
+
+        [SerializeField]
         private TransformPanel transformPanel;
 
         [Header("Thumbnail rendering")]
@@ -124,7 +128,7 @@ namespace Netherlands3D.Interface.SidePanel
             transformPanel.gameObject.SetActive(false);
         }
 
-        private void SetDynamicFieldsTargetContainer(Transform targetContainer)
+        public void SetDynamicFieldsTargetContainer(Transform targetContainer)
         {
             generatedFieldsRootContainer = targetContainer;
             targetFieldsContainer = targetContainer;
@@ -157,7 +161,7 @@ namespace Netherlands3D.Interface.SidePanel
             settingsTab.OpenTab();
             OpenPanel();
         }
-
+        
         /// <summary>
         /// Open the annotations tab
         /// </summary>
@@ -388,7 +392,11 @@ namespace Netherlands3D.Interface.SidePanel
         #region Methods for generating the main field types (spawning prefabs)
         public void AddTitle(string titleText)
         {
-            Instantiate(titlePrefab, targetFieldsContainer).GetComponent<Text>().text = titleText;
+            var title = Instantiate(titlePrefab, targetFieldsContainer);
+            title.name = titleText;
+            
+            title.GetComponent<Text>().text = titleText;
+            
         }
         public void AddTextfield(string content)
         {
@@ -397,6 +405,11 @@ namespace Netherlands3D.Interface.SidePanel
         public void AddLabel(string labelText)
         {
             Instantiate(labelPrefab, targetFieldsContainer).GetComponent<Text>().text = labelText;
+        }
+
+        public void AddInputText()
+        {
+            Instantiate(InputTextPrefab, targetFieldsContainer); 
         }
 
         public void AddLoadingSpinner()
