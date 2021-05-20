@@ -87,6 +87,10 @@ namespace Netherlands3D.Interface.SidePanel
         private ActionCheckbox checkboxPrefab;
 
         [SerializeField]
+        private GameObject InputTextPrefab;
+
+
+        [SerializeField]
         private TransformPanel transformPanel;
 
         [Header("Thumbnail rendering")]
@@ -126,7 +130,7 @@ namespace Netherlands3D.Interface.SidePanel
             transformPanel.gameObject.SetActive(false);
         }
 
-        private void SetDynamicFieldsTargetContainer(Transform targetContainer)
+        public void SetDynamicFieldsTargetContainer(Transform targetContainer)
         {
             generatedFieldsRootContainer = targetContainer;
             targetFieldsContainer = targetContainer;
@@ -462,6 +466,12 @@ namespace Netherlands3D.Interface.SidePanel
         public void AddCustomPrefab(GameObject prefab)
         {
             Instantiate(prefab, targetFieldsContainer);
+        }
+
+        public InputField AddInputText()
+        {
+            var gam = Instantiate(InputTextPrefab, targetFieldsContainer);
+            return gam.GetComponentInChildren<InputField>();
         }
         public void ClearGeneratedFields()
         {
