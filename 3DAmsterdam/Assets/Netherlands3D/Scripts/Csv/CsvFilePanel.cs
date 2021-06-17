@@ -124,15 +124,14 @@ public class CsvFilePanel : MonoBehaviour
 
     void ShowAll()
     {
-        int count = 0;
-
         var firstrow = csvGeoLocation.Rows[0];
         double firstrow_x = double.Parse(firstrow[csvGeoLocation.XColumnIndex]);
         bool isRd = csvGeoLocation.IsRd(firstrow_x);
 
-        foreach (var row in csvGeoLocation.Rows)
-        {            
-            count++;
+        for (int rowindex = 0; rowindex <csvGeoLocation.Rows.Count; rowindex++)
+        {
+            var row = csvGeoLocation.Rows[rowindex];
+
             var locationMarker = Instantiate(marker, LocationMarkersParent.transform);
 
             var billboard = locationMarker.GetComponent<Billboard>();
@@ -141,7 +140,7 @@ public class CsvFilePanel : MonoBehaviour
 
             labels.Add(textmesh);
 
-            billboard.Index = count;
+            billboard.Index = rowindex;
             billboard.Row = row;
             billboard.ClickAction = (action =>
             {
