@@ -107,7 +107,7 @@ public class T3DInit : MonoBehaviour
         var posRD = cameraPosition.Value;
 
         //set relative center to cameraposition to avoid floating point precision issues
-        Config.activeConfiguration.RelativeCenterRD = new Vector2RD(posRD.x, posRD.y);
+        //Config.activeConfiguration.RelativeCenterRD = new Vector2RD(posRD.x, posRD.y);
 
         GotoPosition(posRD);
         StartCoroutine(TileVisualizer.LoadTile(posRD.x, posRD.y, BagId));

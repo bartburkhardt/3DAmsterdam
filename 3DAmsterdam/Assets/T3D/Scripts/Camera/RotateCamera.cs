@@ -18,6 +18,7 @@ public class RotateCamera : MonoBehaviour, ICameraControls
     public float firstPersonCameraDistance = 5f;
     public float MaxCameraDistance = 200;
     public float MaxFirstPersonDistance = 40;
+    public float rotateSpeed = 15f;
 
     [SerializeField]
     private bool dragging = false;
@@ -75,8 +76,21 @@ public class RotateCamera : MonoBehaviour, ICameraControls
         PerceelCenter = args.Center;
     }
 
+    bool rotateEnabled = false;
+
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            rotateEnabled = !rotateEnabled;            
+        }
+
+        if (rotateEnabled)
+        {
+            RotateAround(Time.deltaTime * rotateSpeed, 0);
+        }
+
+
         var mouseDelta = Mouse.current.delta.ReadValue();
         if (dragging && Input.GetMouseButton(0) && isFirstPersonMode == false)
         {         
